@@ -2,10 +2,10 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-      "tamplateStorage": {
+      "storage": {
         "value": "https://github.com/sandesh821/link-arm-template/blob/main/template/storage/"
       },
-      "appService": {
+      "appservice": {
         "value": "https://raw.githubusercontent.com/sandesh821/link-arm-template/main/template/appService/"
       },
       "dataFactory": {
@@ -14,7 +14,7 @@
       "synapse": {
         "value": "https://raw.githubusercontent.com/sandesh821/link-arm-template/main/template/synapse/"
       },
-      "keyVaults": {
+      "keyvaults": {
         "value": "https://raw.githubusercontent.com/sandesh821/link-arm-template/main/template/keyVaults/"
       }
 

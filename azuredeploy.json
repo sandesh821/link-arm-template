@@ -2,24 +2,51 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-      "tamplateStorage":{
+      "storage":{
       "type": "string"
+    },
+    "appservice": {
+      "type": "string",
+      "metadata": {
+        "description": "description"
+      }
+    },
+    "synapse": {
+      "type": "string",
+      "metadata": {
+        "description": "description"
+      }
+
+    },
+    "dataFactory": {
+      "type": "string",
+      "metadata": {
+        "description": "description"
+      }
+    },
+    "keyvaults": {
+      "type": "string",
+      "metadata": {
+        "description": "description"
+      }
     }
+
 
 
     },
     "resources": [
       {
+        // storage account
         "type": "Microsoft.Resources/deployments",
         "apiVersion": "2021-04-01",
         "name": "storage-child",
         "properties": {
           "mode": "Incremental",
           "templateLink":{
-            "uri": "[concat(parameters('tamplateStorage'), 'storageaccount.json')]"
+            "uri": "[concat(parameters('storage'), 'storageaccount.json')]"
           },
           "parametersLink": {
-            "uri": "[concat(parameters('tamplateStorage'), 'storage.parameters.json')]"  
+            "uri": "[concat(parameters('storage'), 'storage.parameters.json')]"  
         }
        }
       },
@@ -32,10 +59,10 @@
         "properties": {
           "mode": "Incremental",
           "templateLink":{
-            "uri": "https://raw.githubusercontent.com/sandesh821/link-arm-template/main/template/appService/appservice.json"
+            "uri": "[concat(parameters('appservice'), 'appservice.json')]"
           },
           "parametersLink": {
-            "uri": "https://raw.githubusercontent.com/sandesh821/link-arm-template/main/template/appService/appservice.parameters.json"  
+            "uri": "[concat(parameters('appservice'), 'appservice.parameters.json')]"  
         }
       }
       },
@@ -47,10 +74,10 @@
         "properties": {
           "mode": "Incremental",
           "templateLink":{
-            "uri": "https://raw.githubusercontent.com/sandesh821/link-arm-template/main/template/dataFactory/azuredeploy.json"
+            "uri": "[concat(parameters('dataFactory'), 'datafactory.json')]"
           },
           "parametersLink": {
-            "uri": "https://raw.githubusercontent.com/sandesh821/link-arm-template/main/template/dataFactory/azuredeploy.parameters.json"  
+            "uri": "[concat(parameters('dataFactory'), 'datafactory.parameters.json')]"  
         }
       }
       },
@@ -62,25 +89,25 @@
         "properties": {
           "mode": "Incremental",
           "templateLink":{
-            "uri": "https://raw.githubusercontent.com/sandesh821/link-arm-template/main/template/synapse/azuredeploy.json"
+            "uri": "[concat(parameters('synapse'), 'synapse.json')]"
           },
           "parametersLink": {
-            "uri": "https://raw.githubusercontent.com/sandesh821/link-arm-template/main/template/synapse/azuredeploy.parameters.json"  
+            "uri": "[concat(parameters('synapse'), 'synapse.parameters.json')]"  
         }
       }
       },
       {
-        //child storage account storage account
+        //child key vault 
         "type": "Microsoft.Resources/deployments",
         "apiVersion": "2021-04-01",
-        "name": "synapse-child",
+        "name": "keyVaults-child",
         "properties": {
           "mode": "Incremental",
           "templateLink":{
-            "uri": "https://raw.githubusercontent.com/sandesh821/link-arm-template/main/template/keyVaults/keyvault.json"
+            "uri": "[concat(parameters('keyvaults'), 'keyvault.json')]"
           },
           "parametersLink": {
-            "uri": "https://raw.githubusercontent.com/sandesh821/link-arm-template/main/template/keyVaults/keyvault.parameters.json"  
+            "uri": "[concat(parameters('keyvaults'), 'keyvault.parameters.json')]"  
         }
       }
       }
