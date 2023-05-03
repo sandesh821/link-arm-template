@@ -2,8 +2,14 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "appServiceName": {
+            "value": "appvscode6665" 
+        },
+        "datafactoryname": {
+            "value": "datafactory6665"
+        },
         "keyVaultName": {
-            "value": "key-vault6663" 
+            "value": "key-vault6665" 
         },
         "skuName": {
             "value": "Standard"

@@ -2,7 +2,16 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        
+    
+    "appServiceName":{
+        "type": "string"
+      },
+      "datafactoryname": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
+        },
     "keyVaultName": {
       "type": "string",
       "metadata": {
@@ -114,7 +123,7 @@
         "accessPolicies": [
           {
             // manage adentity for app service
-            "tenantId": "[reference(resourceId('Microsoft.Web/sites/', parameters('appServiceName')), '2020-12-01', 'Full').identity.tenantId]",
+            "tenantId": "[subscription().tenantId]",
 
            "objectId": "[reference(resourceId('Microsoft.Web/sites/', parameters('appServiceName')), '2020-12-01', 'Full').identity.principalId]",
             "permissions": {
@@ -124,8 +133,8 @@
             }
           },
           {
-            //manage adentities for Data factory
-            "tenantId": "[reference(resourceId('Microsoft.DataFactory/factories', parameters('datafactoryname')), '2018-06-01', 'Full').identity.tenantId]",
+            //manage Identities for Data factory
+            "tenantId": "[subscription().tenantId]",
             "objectId": "[reference(resourceId('Microsoft.DataFactory/factories', parameters('datafactoryname')), '2018-06-01', 'Full').identity.principalId]",
             "permissions": {
               "keys": "[parameters('keysPermissions-DF')]",

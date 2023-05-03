@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "StorageAccountName": {
-            "value": "myvaul66632" 
+            "value": "myvaul66665" 
         },
         "HierarchicalNamespace": {
             "value": "true"

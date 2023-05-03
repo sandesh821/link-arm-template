@@ -46,7 +46,7 @@
             "uri": "[concat(parameters('storage'), 'storageaccount.json')]"
           },
           "parametersLink": {
-            "uri": "[concat(parameters('storage'), 'storage.parameters.json')]"  
+            "uri": "[concat(parameters('storage'), 'storage.parameters.json')]"
         }
        }
       },

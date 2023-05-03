@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
       "storage": {
-        "value": "https://github.com/sandesh821/link-arm-template/blob/main/template/storage/"
+        "value": "https://raw.githubusercontent.com/sandesh821/link-arm-template/main/template/storage/"
       },
       "appservice": {
         "value": "https://raw.githubusercontent.com/sandesh821/link-arm-template/main/template/appService/"

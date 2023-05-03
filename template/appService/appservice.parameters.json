@@ -3,10 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "appServiceName": {
-            "value": "appvscode6663" 
+            "value": "appvscode6665" 
         },
         "appServicePlanName": {
-            "value": "vscodeservice6663" 
+            "value": "vscodeservice6665" 
         },
         "appServicePlanSkuName": {
             "value": "B1"

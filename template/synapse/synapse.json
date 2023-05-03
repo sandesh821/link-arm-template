@@ -5,9 +5,6 @@
         "name": {
             "type": "string"
         },
-        "location": {
-            "type": "string"
-        },
         "defaultDataLakeStorageAccountName": {
             "type": "string"
         },
@@ -49,7 +46,7 @@
         {
             "apiVersion": "2019-06-01-preview",
             "name": "[parameters('name')]",
-            "location": "[parameters('location')]",
+            "location": "[resourceGroup().location]",
             "type": "Microsoft.Synapse/workspaces",
             "identity": {
                 "type": "SystemAssigned"
