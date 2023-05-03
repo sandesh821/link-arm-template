@@ -113,7 +113,6 @@
       "apiVersion": "2019-09-01",
       "name": "[parameters('keyVaultName')]",
       "location": "[resourceGroup().location]",
-      "dependsOn": ["[resourceId('Microsoft.Web/sites', parameters('appServiceName'))]"],
       "properties": {
         "enabledForDeployment": "[parameters('enabledForDeployment')]",
         "enabledForDiskEncryption": "[parameters('enabledForDiskEncryption')]",
