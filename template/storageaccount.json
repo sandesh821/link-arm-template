@@ -1,0 +1,47 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        //storage account parameter
+        "StorageAccountName":{
+                "type": "string",
+                "metadata": {
+                    "description": "Storage Account name"
+                }
+            },
+            "HierarchicalNamespace": {
+                "type": "string",
+                "metadata": {
+                    "description": "create gen2 storage account"
+                }
+            },
+            "allowBlobPublicAccess": {
+                "type": "bool"
+            }
+    
+    
+        
+       },
+       // storage account
+       "resources": [
+       {
+        "type": "Microsoft.Storage/storageAccounts",
+        "name": "[parameters('StorageAccountName')]",
+        "apiVersion": "2021-04-01",
+        "tags": {
+            "displayName": "storageaccount1"
+        },
+        "location": "[resourceGroup().location]",
+        "kind": "StorageV2",
+        "sku": {
+            "name": "Standard_LRS",
+            "tier": "Standard"
+        },
+        "properties": {
+        "isHnsEnabled": "[parameters('HierarchicalNamespace')]",
+        "allowBlobPublicAccess": "[parameters('allowBlobPublicAccess')]"
+        }
+    } 
+
+  ]
+}
