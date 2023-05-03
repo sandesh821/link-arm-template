@@ -2,22 +2,91 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+      "tamplateStorage":{
+      "type": "string"
+    }
+
+
     },
     "resources": [
       {
         "type": "Microsoft.Resources/deployments",
         "apiVersion": "2021-04-01",
-        "name": "childLinked",
+        "name": "storage-child",
         "properties": {
           "mode": "Incremental",
           "templateLink":{
-            "uri": "https://raw.githubusercontent.com/sandesh821/link-arm-template/main/template/storageaccount.json"
+            "uri": "[concat(parameters('tamplateStorage'), 'storageaccount.json')]"
           },
           "parametersLink": {
-            "uri": "https://raw.githubusercontent.com/sandesh821/link-arm-template/main/template/storage.parameters.json"  
+            "uri": "[concat(parameters('tamplateStorage'), 'storage.parameters.json')]"  
+        }
+       }
+      },
+
+      {
+        // app service child
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2021-04-01",
+        "name": "app-service-child",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink":{
+            "uri": "https://raw.githubusercontent.com/sandesh821/link-arm-template/main/template/appService/appservice.json"
+          },
+          "parametersLink": {
+            "uri": "https://raw.githubusercontent.com/sandesh821/link-arm-template/main/template/appService/appservice.parameters.json"  
+        }
+      }
+      },
+      {
+        //child data factory storage account
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2021-04-01",
+        "name": "datafactory-child",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink":{
+            "uri": "https://raw.githubusercontent.com/sandesh821/link-arm-template/main/template/dataFactory/azuredeploy.json"
+          },
+          "parametersLink": {
+            "uri": "https://raw.githubusercontent.com/sandesh821/link-arm-template/main/template/dataFactory/azuredeploy.parameters.json"  
+        }
+      }
+      },
+      {
+        //child synapse storage account
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2021-04-01",
+        "name": "synapse-child",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink":{
+            "uri": "https://raw.githubusercontent.com/sandesh821/link-arm-template/main/template/synapse/azuredeploy.json"
+          },
+          "parametersLink": {
+            "uri": "https://raw.githubusercontent.com/sandesh821/link-arm-template/main/template/synapse/azuredeploy.parameters.json"  
+        }
+      }
+      },
+      {
+        //child storage account storage account
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2021-04-01",
+        "name": "synapse-child",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink":{
+            "uri": "https://raw.githubusercontent.com/sandesh821/link-arm-template/main/template/keyVaults/keyvault.json"
+          },
+          "parametersLink": {
+            "uri": "https://raw.githubusercontent.com/sandesh821/link-arm-template/main/template/keyVaults/keyvault.parameters.json"  
         }
       }
       }
+
+
+      
     ],
     "outputs": {}
   }
