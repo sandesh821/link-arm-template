@@ -2,12 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "StorageAccountName":{
-                "type": "string",
-                "metadata": {
-                    "description": "Storage Account name"
-                }
-            }
     },
     "resources": [
       {
@@ -16,13 +10,11 @@
         "name": "childLinked",
         "properties": {
           "mode": "Incremental",
-          "templateLink": {
-            "relativePath": "template/storageaccount.json"
+          "templateLink":{
+            "uri": "https://raw.githubusercontent.com/sandesh821/link-arm-template/main/template/storageaccount.json"
           },
-          "parameters": {
-          "StorageAccountName": {
-            "value": "[parameters('StorageAccountName')]"
-          }
+          "parametersLink": {
+            "uri": "https://raw.githubusercontent.com/sandesh821/link-arm-template/main/template/storage.parameters.json"  
         }
       }
       }

@@ -1,0 +1,78 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+
+        "appServiceName": {
+        "type": "string"
+      },
+      "appServicePlanName": {
+        "type": "string",
+        "minLength": 1
+      },
+      "appServicePlanSkuName": {
+        "type": "string",
+        "defaultValue": "B1",
+        "allowedValues": [
+          "F1",
+          "D1",
+          "B1",
+          "B2",
+          "B3",
+          "S1",
+          "S2",
+          "S3",
+          "P1",
+          "P2"
+        ]
+        
+      }
+    },
+    "functions": [],
+    "variables": {
+        "appHostingPlanNameVar": "[concat(parameters('appServicePlanName'),'-apps')]"
+    },
+
+
+    "resources": [
+
+        // app service plan
+            {
+      "name": "[variables('appHostingPlanNameVar')]",
+      "type": "Microsoft.Web/serverfarms",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-08-01",
+      "sku": {
+        "name": "[parameters('appServicePlanSkuName')]"
+      },
+      
+      "tags": {
+        "displayName": "appServicePlan"
+      },
+      "kind": "linux",
+      "properties": {
+        "name": "[variables('appHostingPlanNameVar')]",
+        "numberOfWorkers": 1
+      }
+    },
+    // app service
+    {
+      "name": "[parameters('appServiceName')]",
+      "type": "Microsoft.Web/sites",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-08-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', variables('appHostingPlanNameVar'))]"
+      ],
+      "identity": {
+        "type": "SystemAssigned"
+        },
+      "properties": {
+        "name": "[parameters('appServiceName')]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appHostingPlanNameVar'))]"
+      }
+      
+    }
+    ],
+    "outputs": {}
+}
