@@ -27,17 +27,8 @@
                 "default",
                 ""
             ]
-        },
-        "tagValues": {
-            "type": "object",
-            "defaultValue": {}
-        },
-        
-        "adlaResourceId": {
-            "type": "string",
-            "defaultValue": ""
-    }
-   },
+        }
+    },
     "variables": {
         "defaultDataLakeStorageAccountUrl": "[concat('https://', parameters('defaultDataLakeStorageAccountName'), '.dfs.core.windows.net')]"
     },
@@ -58,10 +49,8 @@
                 },
                 "sqlAdministratorLogin": "[parameters('sqlAdministratorLogin')]",
                 "sqlAdministratorLoginPassword": "[parameters('sqlAdministratorLoginPassword')]",
-                "adlaResourceId": "[parameters('adlaResourceId')]",
                 "managedVirtualNetwork": "[parameters('managedVirtualNetwork')]"
-            },
-            "tags": "[parameters('tagValues')]"
+            }
         }
         
     ],

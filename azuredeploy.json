@@ -2,37 +2,162 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-      "storage":{
-      "type": "string"
-    },
-    "appservice": {
+    "templateDeploy": {
       "type": "string",
       "metadata": {
         "description": "description"
       }
     },
-    "synapse": {
-      "type": "string",
-      "metadata": {
-        "description": "description"
-      }
-
-    },
-    "dataFactory": {
-      "type": "string",
-      "metadata": {
-        "description": "description"
-      }
-    },
-    "keyvaults": {
-      "type": "string",
-      "metadata": {
-        "description": "description"
-      }
+//-------------------------------------------------------------------------------------------
+    "StorageAccountName":{
+        "type": "string",
+          "metadata": {
+              "description": "Storage Account name"
+          }
+      },
+      "HierarchicalNamespace": {
+          "type": "string",
+          "metadata": {
+              "description": "create gen2 storage account"
+          }
+      },
+    
+      // app service parameters
+      "appServiceName": {
+        "type": "string"
+      },
+      "appServicePlanName": {
+        "type": "string",
+        "minLength": 1
+      },
+      "appServicePlanSkuName": {
+        "type": "string",
+        "defaultValue": "B1",
+        "allowedValues": [
+          "F1",
+          "D1",
+          "B1",
+          "B2",
+          "B3",
+          "S1",
+          "S2",
+          "S3",
+          "P1",
+          "P2"
+        ]
+        
+      },
+    // Datafactory name 
+      "datafactoryname": {
+          "type": "string",
+          "metadata": {
+              "description": "description"
+          }
+      },
+      "keyVaultName": {
+    "type": "string",
+    "metadata": {
+      "description": "Specifies the name of the key vault."
     }
+    },
+    
+    "skuName": {
+      "type": "string",
+      "defaultValue": "Standard",
+      "allowedValues": [
+        "Standard",
+        "Premium"
+      ]
+      
+    },
+     "enabledForDeployment": {
+        "type": "Bool",
+        "defaultValue": false,
+        "metadata": {
+            "description": "description"
+        }
+    },
+    "keysPermissions-AS": {
+      "type": "array",
+      "defaultValue": [
+        "list"
+      ],
+      "metadata": {
+        "description": "Specifies the permissions to keys in the vault. Valid values are: all, encrypt, decrypt, wrapKey, unwrapKey, sign, verify, get, list, create, update, import, delete, backup, restore, recover, and purge."
+      }
+    },
+    "secretsPermissions-AS": {
+      "type": "array",
+      "defaultValue": [
+        "list"
+      ],
+      "metadata": {
+        "description": "Specifies the permissions to secrets in the vault. Valid values are: all, get, list, set, backup, restore, recover, and purge."
+      }
+    },
+    "certificatePermissions-AS": {
+      "type": "array",
+      "defaultValue": [
+        "list"
+      ],
+      "metadata": {
+        "description": "Specifies the permissions to certificates in the vault. Valid values are: all,  create, delete, update, deleteissuers, get, getissuers, import, list, listissuers, managecontacts, manageissuers,  recover, backup, restore, setissuers, and purge."
+      }
+    },
+    "keysPermissions-DF": {
+      "type": "array",
+      "defaultValue": [
+        "list"
+      ],
+      "metadata": {
+        "description": "Specifies the permissions to keys in the vault. Valid values are: all, encrypt, decrypt, wrapKey, unwrapKey, sign, verify, get, list, create, update, import, delete, backup, restore, recover, and purge."
+      }
+    },
+    "secretsPermissions-DF": {
+      "type": "array",
+      "defaultValue": [
+        "list"
+      ],
+      "metadata": {
+        "description": "Specifies the permissions to secrets in the vault. Valid values are: all, get, list, set, backup, restore, recover, and purge."
+      }
+    },
+    "certificatePermissions-DF": {
+      "type": "array",
+      "defaultValue": [
+        "list"
+      ],
+      "metadata": {
+        "description": "Specifies the permissions to certificates in the vault. Valid values are: all,  create, delete, update, deleteissuers, get, getissuers, import, list, listissuers, managecontacts, manageissuers,  recover, backup, restore, setissuers, and purge."
+      }
+    },
+        "name": {
+            "type": "string"
+        },
+        "defaultDataLakeStorageAccountName": {
+            "type": "string"
+        },
+        "defaultDataLakeStorageFilesystemName": {
+            "type": "string"
+        },
+        "sqlAdministratorLogin": {
+            "type": "string"
+        },
+        "sqlAdministratorLoginPassword": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
+        },
 
-
-
+        "managedVirtualNetwork": {
+            "type": "string",
+            "allowedValues": [
+                "default",
+                ""
+            ]
+        }
+//-------------------------------------------------------------------------------------------
     },
     "resources": [
       {
@@ -43,11 +168,16 @@
         "properties": {
           "mode": "Incremental",
           "templateLink":{
-            "uri": "[concat(parameters('storage'), 'storageaccount.json')]"
+            "uri": "[concat(parameters('templateDeploy'), 'storageaccount.json')]"
           },
-          "parametersLink": {
-            "uri": "[concat(parameters('storage'), 'storage.parameters.json')]"
-        }
+          "parameters": {
+                    "StorageAccountName": {
+                        "value": "[parameters('StorageAccountName')]"
+                    },
+                    "HierarchicalNamespace":{
+                        "value": "[parameters('HierarchicalNamespace')]"
+                    }
+          }
        }
       },
 
@@ -59,11 +189,21 @@
         "properties": {
           "mode": "Incremental",
           "templateLink":{
-            "uri": "[concat(parameters('appservice'), 'appservice.json')]"
+            "uri": "[concat(parameters('templateDeploy'), 'appservice.json')]"
           },
-          "parametersLink": {
-            "uri": "[concat(parameters('appservice'), 'appservice.parameters.json')]"  
-        }
+          "parameters": {
+                    "appServiceName": {
+                        "value": "[parameters('appServiceName')]"
+                    },
+                    "appServicePlanName":{
+                        "value": "[parameters('appServicePlanName')]"
+                    },
+                    "appServicePlanSkuName": {
+                      "value": "[parameters('appServicePlanSkuName')]"
+                    }
+
+          }
+
       }
       },
       {
@@ -71,14 +211,17 @@
         "type": "Microsoft.Resources/deployments",
         "apiVersion": "2021-04-01",
         "name": "datafactory-child",
+        "dependsOn": ["[resourceId('Microsoft.Resources/deployments', 'storage-child')]"],
         "properties": {
           "mode": "Incremental",
           "templateLink":{
-            "uri": "[concat(parameters('dataFactory'), 'datafactory.json')]"
+            "uri": "[concat(parameters('templateDeploy'), 'datafactory.json')]"
           },
-          "parametersLink": {
-            "uri": "[concat(parameters('dataFactory'), 'datafactory.parameters.json')]"  
-        }
+          "parameters": {
+              "datafactoryname": {
+                "value": "[parameters('datafactoryname')]"
+              }
+          }
       }
       },
       {
@@ -89,30 +232,85 @@
         "properties": {
           "mode": "Incremental",
           "templateLink":{
-            "uri": "[concat(parameters('synapse'), 'synapse.json')]"
+            "uri": "[concat(parameters('templateDeploy'), 'synapse.json')]"
           },
-          "parametersLink": {
-            "uri": "[concat(parameters('synapse'), 'synapse.parameters.json')]"  
-        }
-      }
+          "parameters": {
+              "name": {
+                "value": "[parameters('name')]"
+              },
+              "defaultDataLakeStorageAccountName": {
+                "value": "[parameters('defaultDataLakeStorageAccountName')]"
+              },
+             
+              "defaultDataLakeStorageFilesystemName": {
+                "value": "[parameters('defaultDataLakeStorageFilesystemName')]"
+              },
+              "sqlAdministratorLogin": {
+                "value": "[parameters('sqlAdministratorLogin')]"
+              },
+              "sqlAdministratorLoginPassword": {
+                "value": "[parameters('sqlAdministratorLoginPassword')]"
+              },
+              "managedVirtualNetwork": {
+                "value": "[parameters('managedVirtualNetwork')]"
+              }
+
+            }
+        } 
       },
       {
         //child key vault 
         "type": "Microsoft.Resources/deployments",
         "apiVersion": "2021-04-01",
         "name": "keyVaults-child",
+        "dependsOn": ["[resourceId('Microsoft.Resources/deployments', 'app-service-child')]"],
         "properties": {
           "mode": "Incremental",
           "templateLink":{
-            "uri": "[concat(parameters('keyvaults'), 'keyvault.json')]"
+            "uri": "[concat(parameters('templateDeploy'), 'keyvault.json')]"
           },
-          "parametersLink": {
-            "uri": "[concat(parameters('keyvaults'), 'keyvault.parameters.json')]"  
-        }
-      }
-      }
+          "parameters": {
+              "keyVaultName": {
+                "value": "[parameters('keyVaultName')]"
+              },
+              "skuName": {
+                "value": "[parameters('skuName')]"
+              },
+              "enabledForDeployment": {
+                "value": "[parameters('enabledForDeployment')]"
+              },
+              "keysPermissions-AS": {
+                "value": "[parameters('keysPermissions-AS')]"
+              },
+              "secretsPermissions-AS": {
+                "value": "[parameters('secretsPermissions-AS')]"
+              },
+              "certificatePermissions-AS": {
+                "value": "[parameters('certificatePermissions-AS')]"
+              },
+              "keysPermissions-DF": {
+                "value": "[parameters('keysPermissions-DF')]"
+              },
+              "secretsPermissions-DF": {
+                "value": "[parameters('secretsPermissions-DF')]"
+              },
+              "certificatePermissions-DF": {
+                "value": "[parameters('certificatePermissions-DF')]"
+              },
+              "datafactoryname": {
+                "value": "[parameters('datafactoryname')]"
+              },
+              "appServiceName": {
+                        "value": "[parameters('appServiceName')]"
+                    }
 
 
+
+          
+         }
+       }
+
+      }
       
     ],
     "outputs": {}

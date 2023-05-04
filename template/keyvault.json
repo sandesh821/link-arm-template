@@ -35,20 +35,6 @@
             "description": "description"
         }
     },
-    "enabledForDiskEncryption": {
-        "type": "bool",
-        "defaultValue": false,
-        "metadata": {
-            "description": "description"
-        }
-    },
-    "enabledForTemplateDeployment": {
-        "type": "bool",
-        "defaultValue": false,
-        "metadata": {
-            "description": "description"
-        }
-    },
     "keysPermissions-AS": {
       "type": "array",
       "defaultValue": [
@@ -115,8 +101,6 @@
       "location": "[resourceGroup().location]",
       "properties": {
         "enabledForDeployment": "[parameters('enabledForDeployment')]",
-        "enabledForDiskEncryption": "[parameters('enabledForDiskEncryption')]",
-        "enabledForTemplateDeployment": "[parameters('enabledForTemplateDeployment')]",
         "tenantId": "[subscription().tenantId]",
 
         "accessPolicies": [

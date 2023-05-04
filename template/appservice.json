@@ -28,7 +28,6 @@
         
       }
     },
-    "functions": [],
     "variables": {
         "appHostingPlanNameVar": "[concat(parameters('appServicePlanName'),'-apps')]"
     },

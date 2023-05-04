@@ -14,9 +14,6 @@
                 "metadata": {
                     "description": "create gen2 storage account"
                 }
-            },
-            "allowBlobPublicAccess": {
-                "type": "bool"
             }
     
     
@@ -38,8 +35,7 @@
             "tier": "Standard"
         },
         "properties": {
-        "isHnsEnabled": "[parameters('HierarchicalNamespace')]",
-        "allowBlobPublicAccess": "[parameters('allowBlobPublicAccess')]"
+        "isHnsEnabled": "[parameters('HierarchicalNamespace')]"
         }
     } 
 

@@ -2,31 +2,34 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-      "templateDeploy": {
-        "value": "https://armtemplatestore.blob.core.windows.net/arm-template/"
-      },
+        
       "appServicePlanName": {
-        "value": "vscodeservice662" 
+        "value": "vscodeservice6665" 
       },
       "appServicePlanSkuName": {
         "value": "B1"
       },
       "appServiceName": {
-        "value": "appvscode662" 
+        "value": "appvscode6665" 
     },
     "datafactoryname": {
-        "value": "datafactory662"
+        "value": "datafactory6665"
     },
     "keyVaultName": {
-        "value": "key-vault662" 
+        "value": "key-vault6665" 
     },
     "skuName": {
         "value": "Standard"
     },
-    "enabledForDeployment":{
-      "value": false
+    "enabledForDeployment": {
+        "value": true
     },
-    
+    "enabledForDiskEncryption": {
+        "value": false
+    },
+    "enabledForTemplateDeployment": {
+        "value": false
+    },
     "keysPermissions-AS": {
         "value": ["get", "list", "create", "update"]
     },
@@ -46,14 +49,16 @@
         "value": ["create", "delete", "update", "get", "list"]
     },
     "StorageAccountName": {
-      "value": "armdeploy662" 
+      "value": "myvaul66665" 
     },
     "HierarchicalNamespace": {
       "value": "true"
     },
-
+    "allowBlobPublicAccess":{
+      "value": false
+     },
      "name": {
-      "value": "synapse662"
+      "value": "synapse6665"
       },
       "defaultDataLakeStorageAccountName": {
           "value": "myvaultstorage6663"
@@ -69,7 +74,15 @@
       }, 
       "managedVirtualNetwork": {
           "value": "default"
+      },
+      "tagValues": {
+          "value": {}
+      },
+      "adlaResourceId": {
+          "value": ""
       }
-      
+
+
     }
 }
+  
